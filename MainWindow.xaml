@@ -1,0 +1,101 @@
+﻿<Window x:Class="Projekt.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Projekt"
+        mc:Ignorable="d"
+        Name="MainWindowName"
+      Title="Mp3 Player Project" Height="600" Width="1100" ResizeMode="NoResize"
+        Icon="/images/icon.png">
+    <Window.Background>
+        <ImageBrush ImageSource="/images/background2.jpg"/>
+    </Window.Background>
+
+    <Grid>
+
+
+
+        <Button Name="stopButton" RenderTransformOrigin="0.456,0.517" Click="StopFile" Margin="183,403,869,120" Background="Transparent" BorderBrush="Transparent" Grid.RowSpan="2">
+            <Image Source="/images/stop_hover.png"  Height="37" Width="27"></Image>
+        </Button>
+
+        <Button Name="playButton" RenderTransformOrigin="0.456,0.517" Click="PlayFile" Margin="263,407,789,124" Background="Transparent" BorderBrush="Transparent" Grid.RowSpan="2">
+            <Image Source="/images/play_hover.png"  Height="31" Width="27"></Image>
+        </Button>
+
+        <Button Name="pauseButton" RenderTransformOrigin="0.456,0.517" Click="PauseFile" Margin="225,403,827,122" Background="Transparent" BorderBrush="Transparent" Grid.RowSpan="2">
+            <Image Source="/images/pause_hover.png"  Height="30" Width="27"></Image>
+        </Button>
+
+        <Button Name="nextButton" Click="NextSong" RenderTransformOrigin="0.456,0.517" Margin="343,407,709,124" Background="Transparent" BorderBrush="Transparent" Grid.RowSpan="2">
+            <Image Source="/images/next_hover.png" Height="31" Width="27"></Image>
+        </Button>
+
+        <Button Name="previousButton" Click="PreviousSong" RenderTransformOrigin="0.456,0.517" Margin="301,407,751,124" Background="Transparent" BorderBrush="Transparent" Grid.RowSpan="2">
+            <Image Source="/images/prev_hover.png" Height="31" Width="27"></Image>
+        </Button>
+
+        <Button Name="folderButton"  Background="Transparent" BorderBrush="Transparent" Height="30" Width="30" Click="OpenFilePath" Margin="-1000,-500,0,0" >
+            <Image Source="/images/folder.png" Height="30" Width="30"></Image>
+        </Button>
+        <Image x:Name="albumImage" HorizontalAlignment="Left" Height="200" Margin="182,86,0,0" VerticalAlignment="Top" Width="200" Source="/images/queen.jpg"/>
+        <Slider x:Name="durationSlider" HorizontalAlignment="Left"  Margin="185,375,0,0" VerticalAlignment="Top" Height="26" Width="198" Value="0" Minimum="0" Maximum="1" Thumb.DragStarted="DurationSliderDragStarted"  Thumb.DragCompleted="DurationSliderDragCompleted" ValueChanged="DurationSliderValueChanged" />
+        <TextBlock x:Name="title" HorizontalAlignment="Left" Margin="182,300,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Opacity="0.9" FontFamily="Verdana" FontSize="18" FontWeight="Bold" Width="200" TextAlignment="Center" RenderTransformOrigin="0.498,0.556"><Run FontFamily="Lato" Text="Title"/></TextBlock>
+        <TextBlock x:Name="author" HorizontalAlignment="Left" Margin="182,326,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Verdana" FontSize="14" Foreground="White" Width="200" TextAlignment="Center"><Run FontFamily="Lato" Text="Author"/></TextBlock>
+        <TextBlock x:Name="textCurrentTime" HorizontalAlignment="Left" Margin="129,378,0,0" TextWrapping="Wrap" Text="00:00:00" VerticalAlignment="Top" FontFamily="Verdana" FontSize="10" Foreground="White" RenderTransformOrigin="0.287,0.47"/>
+        <TextBlock x:Name="textTotalTime" HorizontalAlignment="Left" Margin="388,379,0,0" TextWrapping="Wrap" Text="00:03:56" VerticalAlignment="Top" FontFamily="Verdana" FontSize="10" Foreground="White" RenderTransformOrigin="0.287,0.47"/>
+        <Slider x:Name="volumeSlider" HorizontalAlignment="Left" Margin="209,483,0,0" VerticalAlignment="Top" Width="141" ValueChanged="VolumeSliderValueChanged" Value="0.5" Maximum="1" Minimum="0"/>
+        <TextBlock x:Name="volume" HorizontalAlignment="Left" Margin="255,460,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Verdana" FontSize="14" Foreground="White"><Run FontFamily="Lato" Text="Volume"/></TextBlock>
+        <Image Source="/images/playlist_background.jpg" Margin="745,80,0,0" HorizontalAlignment="Left" Width ="340" Height="436" VerticalAlignment="Top"  />
+        <TreeView x:Name="playlistTreeView"  HorizontalAlignment="Left" Height="436" Margin="745,80,0,0" VerticalAlignment="Top" Width="340" Background="Transparent" BorderBrush="Transparent" Grid.RowSpan="2"  >
+            <TreeView.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
+                      Color="Red" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"
+                      Color="Black" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"
+                      Color="Transparent" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}"
+                      Color="Black" />
+            </TreeView.Resources>
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <EventSetter Event="MouseDoubleClick" Handler="OnItemMouseDoubleClick" />
+                    <EventSetter Event="MouseLeftButtonUp" Handler="OnItemMouseClick" />
+                </Style>
+
+            </TreeView.ItemContainerStyle>
+        </TreeView>
+
+        <Button x:Name="createPlaylistButton" Click="CreatePlaylist"  HorizontalAlignment="Left" Margin="620,177,0,0" VerticalAlignment="Top" Width="100" BorderBrush="Transparent" Height="24" Foreground="White" Opacity="0.88" RenderTransformOrigin="1,0">
+            <Image Source="/images/create_btn.png" Margin="-8,-8,-8,-8" Height="30" Width="102"></Image>
+        </Button>
+        <Button x:Name="renamePlaylistButton" Click ="RenamePlaylist" HorizontalAlignment="Left" Margin="620,217,0,0" VerticalAlignment="Top" Width="100" BorderBrush="Transparent" Height="24" Foreground="White" Opacity="0.88" RenderTransformOrigin="1,0">
+            <Image Source="/images/rename_btn.png"  Margin="-8,-8,-8,-8" Height="30" Width="102"></Image>
+        </Button>
+        <Button x:Name="deletePlaylistButton" Click="DeletePlaylist" HorizontalAlignment="Left" Margin="620,257,0,0" VerticalAlignment="Top" Width="100" BorderBrush="Transparent" Height="24" Foreground="White" Opacity="0.88" RenderTransformOrigin="1,0">
+            <Image Source="/images/delete_btn.png" Margin="-8,-8,-8,-8" Height="30" Width="102"></Image>
+        </Button>
+        <Button x:Name="playPlaylistButton" Click="PlayPlaylist" HorizontalAlignment="Left" Margin="620,137,0,0" VerticalAlignment="Top" Width="100" BorderBrush="Transparent" Height="24" Foreground="Transparent" Opacity="0.88" RenderTransformOrigin="1,0">
+            <Image Source="/images/playlist_btn.png" Margin="-8,-8,-8,-8" Height="30" Width="102"></Image>
+        </Button>
+        <Button x:Name="addFileButton" Click="AddFile"  HorizontalAlignment="Left" Margin="620,297,0,0" VerticalAlignment="Top" Width="100" BorderBrush="Transparent" Height="24" Foreground="White" Opacity="0.88" RenderTransformOrigin="1,0">
+            <Image Source="/images/add_btn.png" Margin="-8,-8,-8,-8" Height="30" Width="102"></Image>
+        </Button>
+        <Button x:Name="deleteFileButton" Click="DeleteFile" HorizontalAlignment="Left" Margin="620,337,0,0" VerticalAlignment="Top" Width="100" BorderBrush="Transparent" Height="24" Foreground="White" Opacity="0.88" RenderTransformOrigin="1,0">
+            <Image Source="/images/deletefile_btn.png" Margin="-8,-8,-8,-8" Height="30" Width="102"></Image>
+        </Button>
+        <TextBlock x:Name="playlists" HorizontalAlignment="Left" Margin="872,54,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Opacity="0.9" FontFamily="Verdana" FontSize="18" FontWeight="Bold" Width="76" TextAlignment="Left"><Run Text="P"/><Run FontFamily="Lato" Text="laylists"/></TextBlock>
+        <TextBlock x:Name="album" HorizontalAlignment="Left" Margin="182,350,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Verdana" FontSize="10" Foreground="White" Width="200" TextAlignment="Center"><Run FontFamily="Lato" Text="Album"/></TextBlock>
+        <TextBlock x:Name="textCurrentPlaylist" HorizontalAlignment="Left" Margin="590,375,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="155"  Foreground="White" Opacity="0.9" FontFamily="Verdana" FontSize="12" FontWeight="Bold"  TextAlignment="Center" RenderTransformOrigin="0.6,-0.602"><Run FontFamily="Lato" Text="Current Playlist" /></TextBlock>
+        <TextBlock x:Name="titlePlaylist" HorizontalAlignment="Left" Margin="590,403,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"  Foreground="White" Opacity="0.9" FontFamily="Verdana" FontSize="12" FontWeight="Bold"  TextAlignment="Center" RenderTransformOrigin="0.498,0.556"><Run FontFamily="Lato" Text="Title" /></TextBlock>
+        <Button Name="shuffleButton" Click="ShufflePlaylist" RenderTransformOrigin="0.456,0.517"  Margin="870,32,0,491" Background="Transparent" Height="37" Width="31" BorderBrush="Transparent">
+            <Image Source="images\shuffle_hover.png" Height="27" Width="27"></Image>
+        </Button>
+        <Button Name="savePlaylistButton" Click="SavePlaylists" HorizontalAlignment="Left" Margin="620,95,0,0" VerticalAlignment="Top" Width="100" BorderBrush="Transparent" Height="24" Foreground="White" Opacity="0.88" RenderTransformOrigin="1,0">
+            <Image Source="/images/save_btn.png" Margin="-8,-8,-8,-8" Height="30" Width="102"></Image>
+        </Button>
+    </Grid>
+</Window>
+
